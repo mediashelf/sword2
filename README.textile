@@ -1,0 +1,4 @@
+h1. SWORD2
+
+This is an implementation of the SWORD2 specification for the 
+Fedora Commons repository.
