@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>com.yourmediashelf.sword2</groupId>
+    <artifactId>sword2</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>sword2-example</artifactId>
+  <packaging>war</packaging>
+  <name>MediaShelf ${project.artifactId}</name>
+  <description>SWORD2 Example Server</description>
+  <url>http://mediashelf.github.com/${project.artifactId}</url>
+
+  <properties>
+    <jetty.port>9080</jetty.port>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yourmediashelf.sword2</groupId>
+      <artifactId>sword2-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-client</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <jetty.port>${jetty.port}</jetty.port>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <configuration>
+          <!-- scanIntervalSeconds default is 0, which disables hot deployment -->
+          <scanIntervalSeconds>1</scanIntervalSeconds>
+          <stopKey>arrete</stopKey>
+          <stopPort>9005</stopPort>
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>${jetty.port}</port>
+            </connector>
+          </connectors>
+          <webAppConfig>
+            <contextPath>/${project.artifactId}</contextPath>
+          </webAppConfig>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <!-- stop any previous instance to free up the port -->
+              <goal>stop</goal>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

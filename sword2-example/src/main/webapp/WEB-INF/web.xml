@@ -1,0 +1,13 @@
+<web-app id="WebApp_ID" version="2.4" 
+  xmlns="http://java.sun.com/xml/ns/j2ee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <servlet id="sword2-example">
+    <servlet-name>SWORD2 Example</servlet-name>  
+    <servlet-class>com.yourmediashelf.sword2.collection.example.ExampleArticleProviderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping id="abdera-mapping">
+    <servlet-name>SWORD2 Example</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+</web-app>
